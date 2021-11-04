@@ -1,10 +1,27 @@
 import hashlib
 import os
 import time
+import random
+import sys
 
 passwordList = []
 loginSuccess = 0
 
+def start():
+    opt = str(input("Would you like to login to an account, register, delete account, change a password or cancel?? Type 'Login' to login, 'Register' to register, 'Change' to change, 'Delete' to delete and 'Cancel' to cancel"))
+    opt = opt.lower()
+    if opt == "login":
+        login()
+    elif opt == "register":
+        createFile()
+    elif opt == "change":
+        changePass()
+    elif opt == "delete":
+        delete()
+    elif opt == "cancel":
+        sys.exit("Cancelled")
+    else:
+        print("Not a valid response")
 
 # defines the function for finding a file
 def find_all(name, path):
@@ -31,11 +48,9 @@ def createFile():
     myFile.write(inputHash)
     myFile.close()
     print("User created")
-    time.sleep(5)
+    start()
 
 # defines the function for logging in (obviously)
-
-
 def login():
     userLogin = str(input("Please enter your username:  "))
     passLogin = str(input("Please enter your password:  ")).encode()
@@ -44,11 +59,11 @@ def login():
         contents = f.read()
     if passLoginHash == contents:
         print("Login successful!")
-        time.sleep(5)
 
     else:
         print("Incorrect username or password")
-        time.sleep(5)
+
+    start()
 
 #changing password function
 def changePass():
@@ -75,7 +90,7 @@ def changePass():
     file.close()
 
     print("Password change successful")
-    time.sleep(5)
+    start()
 
 #returns an error rather than deleting the account anyway if you get the password wrong, it doesnt delete the file and i cannot be bothered to debug it rn
 #i am fixing it now so ignore that last comment
@@ -105,7 +120,7 @@ def delete():
 
         if loginSuccess == 1:
             isfile = os.path.isfile(user + ".txt")
-            
+
             os.remove(user + ".txt")
             print("Account deleted")
 
@@ -116,17 +131,8 @@ def delete():
     else:
         print("Not a valid response")
 
+    start()
 
-start = str(input("Would you like to login to an account, register, delete account or change a password? Type 'Login' to login, 'Register' to register, 'Change' to change and 'Delete' to delete."))
-start = start.lower()
-if start == "login":
-    login()
-elif start == "register":
-   createFile()
-elif start == "change":
-    changePass()
-elif start == "delete":
-    delete()
-else:
-    print("Not a valid response")
+
+start()
 
