@@ -13,4 +13,4 @@ do whatever you want with it
 
 
 
-also it works like shit
+also it doesnt work very well
